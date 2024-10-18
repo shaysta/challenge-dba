@@ -1,6 +1,12 @@
-# challenge-dba
 
-# Desafio PostgreSQL: Criação de Tabelas Relacionadas e Otimização de Consultas
++A Educação - Desafio PostgreSQL
+===================
+
+[![N|Solid](https://maisaedu.com.br/hubfs/site-grupo-a/logo-mais-a-educacao.svg)](https://maisaedu.com.br/) 
+
+O objetivo deste desafio é avaliar algumas competências técnicas consideradas fundamentais para candidatos ao cargo de DBA na Maior Plataforma de Educação do Brasil.
+
+Será solicitado ao candidato que realize algumas tarefas baseadas em estrutura incompleta de tabelas relacionadas neste documento. Considere o PostgreSQL com SGDB ao aplicar conceitos e validações.
 
 ## Contexto
 
@@ -78,4 +84,16 @@ CREATE TABLE enrollment (
 5. Construa uma consulta que retorne o número de matrículas por curso em uma determinada instituição.Filtre por tenant_id e institution_id obrigatoriamente. Filtre também por uma busca qualquer -full search - no campo metadata da tabela person que contém informações adicionais no formato JSONB. Considere aqui também a exclusão lógica e exiba somente registros válidos.
 6. Construa uma consulta que retorne os alunos de um curso em uma tenant e institution específicos. Esta é uma consulta para atender a requisição que tem por objetivo alimentar uma listagem de alunos em determinado curso. Tenha em mente que poderá retornar um número grande de registros por se tratar de um curso EAD. Use boas práticas. Considere aqui também a exclusão lógica e exiba somente registros válidos.
 7. Suponha que decidimos particionar a tabela enrollment. Desenvolva esta ideia. Reescreva a definição da tabela por algum critério que julgues adequado. Faça todos os ajustes necessários e comente-os.
-8. Sinta-se a vontade para sugerir e aplicar qualquer ajuste que achares relevante. Comente-os aqui.
+8. Sinta-se a vontade para sugerir e aplicar qualquer ajuste que achares relevante. Comente-os
+
+
+## Critérios de avaliação
+- Organização, clareza e lógica
+- Utilização boas práticas
+- Documentação justificando o porquê das escolhas
+
+## Instruções de entrega
+1. Crie um fork do repositório no seu GitHub
+2. Faça o push do código desenvolvido no seu Github
+3. Informe ao recrutador quando concluir o desafio junto com o link do repositório
+4. Após revisão do projeto junto com a equipe de desevolvimento deixe seu repositório privado
