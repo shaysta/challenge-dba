@@ -6,7 +6,7 @@
 
 O objetivo deste desafio é avaliar algumas competências técnicas consideradas fundamentais para candidatos ao cargo de DBA na Maior Plataforma de Educação do Brasil.
 
-Será solicitado ao candidato que realize algumas tarefas baseadas em estrutura incompleta de tabelas relacionadas neste documento. Considere o PostgreSQL com SGDB ao aplicar conceitos e validações.
+Será solicitado ao candidato que realize algumas tarefas baseadas em estrutura incompleta de tabelas relacionadas neste documento. Considere o PostgreSQL como SGDB ao aplicar conceitos e validações.
 
 ## Contexto
 
@@ -75,7 +75,7 @@ CREATE TABLE enrollment (
 );
 ```
 
-## Tarefas:
+## Tarefas
 
 1. Identifique as chaves primárias e estrangeiras necessárias para garantir a integridade referencial. Defina-as corretamente. 
 2. Construa índices que consideras essenciais para operações básicas do banco e de consultas possíveis para a estrutura sugerida.
@@ -89,11 +89,11 @@ CREATE TABLE enrollment (
 
 ## Critérios de avaliação
 - Organização, clareza e lógica
-- Utilização boas práticas
+- Utilização de boas práticas
 - Documentação justificando o porquê das escolhas
 
 ## Instruções de entrega
 1. Crie um fork do repositório no seu GitHub
 2. Faça o push do código desenvolvido no seu Github
 3. Informe ao recrutador quando concluir o desafio junto com o link do repositório
-4. Após revisão do projeto junto com a equipe de desevolvimento deixe seu repositório privado
+4. Após revisão do projeto, em conjunto com a equipe técnica, deixe seu repositório privado
