@@ -1,0 +1,135 @@
+Resposta 1, 2 e 3
+
+
+CREATE TABLE tenant (
+    id SERIAL,
+    name VARCHAR(100),
+    description VARCHAR(255)
+CONSTRAINT pk_id_tenant PRIMARY KEY (id)
+);
+
+CREATE TABLE person (
+    id SERIAL,
+    name VARCHAR(100),
+    birth_date DATE,
+    metadata JSONB
+CONSTRAINT pk_id_person PRIMARY KEY (id)
+);
+
+CREATE INDEX ON birth_date_idx person (birth_date);
+
+CREATE TABLE institution (
+    id SERIAL,
+    tenant_id INTEGER,
+    name VARCHAR(100),
+    location VARCHAR(100),
+    details JSONB
+CONSTRAINT pk_id_institution PRIMARY KEY (id)
+ FOREIGN KEY (tenant_id) REFERENCES tenant (id)
+);
+
+CREATE TABLE course (
+    id SERIAL,
+    tenant_id INTEGER,
+    institution_id INTEGER,
+    name VARCHAR(100),
+    duration INTEGER,
+    details JSONB
+CONSTRAINT pk_id_course PRIMARY KEY (id)
+FOREIGN KEY (tenant_id) REFERENCES tenant (id)
+FOREIGN KEY (institution_id) REFERENCES institution (id)
+);
+
+CREATE INDEX ON institution_idx course (institution_id);
+
+
+CREATE TABLE enrollment (
+    id SERIAL,
+    tenant_id INTEGER,
+    institution_id INTEGER null,
+    person_id INTEGER,
+    enrollment_date DATE,
+    status VARCHAR(20)
+CONSTRAINT pk_id_enrollment PRIMARY KEY (id),
+FOREIGN KEY (tenant_id) REFERENCES tenant (id),
+FOREIGN KEY (institution_id) REFERENCES institution (id),
+FOREIGN KEY (person_id) REFERENCES person (id));
+CREATE INDEX ON enrollment_date_idx enrollment (enrolment_date);
+
+Resposta 4
+
+Exclusao logica
+Soluçäo
+Incluir uma coluna como flag, seria habilitada = 1 quando a coluna fosse alterada para excluida e por default ficaria 0.
+
+CREATE TABLE enrollment (
+    id SERIAL,
+    tenant_id INTEGER,
+    institution_id INTEGER null,
+    person_id INTEGER,
+    enrollment_date DATE,
+    detected flag, 
+    status VARCHAR(20)
+CONSTRAINT pk_id_enrollment PRIMARY KEY (id),
+FOREIGN KEY (tenant_id) REFERENCES tenant (id),
+FOREIGN KEY (institution_id) REFERENCES institution (id),
+FOREIGN KEY (person_id) REFERENCES person (id));
+CREATE INDEX ON enrollment_date_idx enrollment (enrolment_date);
+
+5 .Construa uma consulta que retorne o número de matrículas por curso em uma determinada instituição.Filtre por tenant_id e institution_id obrigatoriamente. Filtre também por uma busca qualquer -full search - no campo metadata da tabela person que contém informações adicionais no formato JSONB. Considere aqui também a exclusão lógica e exiba somente registros válidos.
+
+
+SELECT count(*), c.id_course, a.institution_id, a.tenant_id FROM enrollment a
+inner join institution b
+on a.id_insitution = b.d_insitution
+inner join course c
+on on a.id_insitution = c.d_insitution
+group by a.institution_id, a.tenant_id
+
+SELECT info->>'name' as nome FROM person WHERE id = 1;
+and deleted =0
+
+
+6. Construa uma consulta que retorne os alunos de um curso em uma tenant e institution específicos. Esta é uma consulta para atender a requisição que tem por objetivo alimentar uma listagem de alunos em determinado curso. Tenha em mente que poderá retornar um número grande de registros por se tratar de um curso EAD. Use boas práticas. Considere aqui também a exclusão lógica e exiba somente registros válidos.
+
+CREATE OR REPLACE FUNCTION select_curso (IN id_tenant VARCHAR, id_institution target VARCHAR) RETURNS VOID AS $$ BEGIN
+ declare @id_tenant int, @id_institution int, 
+
+
+SELECT c.id_course, a.institution_id, d.name, d.id FROM enrollment a
+inner join institution b
+on a.id_insitution = b.d_insitution
+inner join course c
+on on a.id_insitution = c.d_insitution
+inner join person d
+on a.id_tenant = b.tenant_id
+where id_instittion=@id_institution and id_tenant = @id_tenant
+
+
+
+7. Suponha que decidimos particionar a tabela enrollment. Desenvolva esta ideia. Reescreva a definição da tabela por algum critério que julgues adequado. Faça todos os ajustes necessários e comente-os.
+
+CREATE TABLE enrollment (
+    id SERIAL,
+    tenant_id INTEGER,
+    institution_id INTEGER null,
+    person_id INTEGER,
+    enrollment_date DATE,
+    status VARCHAR(20)
+CONSTRAINT pk_id_enrollment PRIMARY KEY (id),
+FOREIGN KEY (tenant_id) REFERENCES tenant (id),
+FOREIGN KEY (institution_id) REFERENCES institution (id),
+FOREIGN KEY (person_id) REFERENCES person (id));
+CREATE INDEX ON enrollment_date_idx enrollment (enrolment_date)
+PARTITION BY RANGE (id);
+
+
+CREATE TABLE enrollment1 PARTITION OF enrollment
+    FOR VALUES FROM (1) TO (100000');
+
+CREATE TABLE enrollment2 PARTITION OF enrollment
+    FOR VALUES FROM (100000) TO (1000000');
+
+CREATE TABLE enrollment2PARTITION OF enrollment
+    FOR VALUES FROM (1000000) TO (100000000');
+
